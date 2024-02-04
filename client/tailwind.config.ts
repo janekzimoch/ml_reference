@@ -14,7 +14,7 @@ const config: Config = {
         },
       },
       colors: {
-        gray: {
+        customGray: {
           "200": "#f2f2f2",
           "400": "#CCCCCC",
           "600": "#A5A5A5",
