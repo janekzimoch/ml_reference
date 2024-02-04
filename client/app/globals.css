@@ -18,10 +18,10 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #CCCCCC; /* Scroll handle */
+  background: #f0efed; /* Scroll handle */
   border-radius: 3px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #A5A5A5; /* Scroll handle on hover */
+  background: #d8d7d5; /* Scroll handle on hover */
 }

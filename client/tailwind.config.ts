@@ -14,6 +14,11 @@ const config: Config = {
         },
       },
       colors: {
+        pastel: {
+          DEFAULT: "#f4eadc",
+          dark: "#eedacb",
+          light: "#f0efed",
+        },
         customGray: {
           "200": "#f2f2f2",
           "400": "#CCCCCC",

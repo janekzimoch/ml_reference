@@ -1,0 +1,12 @@
+fitz==0.0.1.dev2
+langchain==0.1.4
+langchain-community
+llama_index==0.9.40
+numpy==1.25.2
+pandas==2.0.3
+pydantic==1.10.13
+python-dotenv==1.0.1
+scikit_learn==1.4.0
+torch==2.1.2
+tqdm==4.66.1
+PyMuPDF==1.23.21
