@@ -3,7 +3,7 @@ from collections import deque
 from enum import Enum
 
 import fitz
-from interfaces import Document
+from interface import Document
 import miscelanous.utils as utils
 
 

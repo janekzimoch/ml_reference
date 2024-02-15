@@ -10,7 +10,7 @@ from WeaviateClient import VectorStoreClient
 import miscelanous.utils as utils
 from data_loader import load_dataset
 import miscelanous.data_formater as formater
-from interfaces import Document
+from server.src.interface import Document
 from embedding_store import EmbeddingStore
 
 

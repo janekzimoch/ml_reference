@@ -9,7 +9,7 @@ from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 
 import miscelanous.data_formater as formater
 import miscelanous.utils as utils
-from interfaces import Document, Recommendation
+from interface import Document, Recommendation
 from parsing.parserPDF import ParserPDF
 from scraper.arxiv import ArxivScraper
 from data_loader import load_dataset

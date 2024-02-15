@@ -1,6 +1,6 @@
 from tqdm import tqdm
 
-from interfaces import Document
+from interface import Document
 
 
 def convert_DORIS_MAE_to_my_format(data_in):

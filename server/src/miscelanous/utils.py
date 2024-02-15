@@ -1,8 +1,10 @@
 import os
 import json
+from datetime import timezone
 import pandas as pd
 import random
-
+from tqdm import tqdm
+random.seed(12345)
 
 def make_directory(dir_path):
     ''' Create a directory at the specified path if it doesn't already exist '''
@@ -62,10 +64,26 @@ def updateJson(path, new_data):
 
 
 def get_random_timestamps(k, min_date='2019-01-01 00:00:00', max_date='2024-01-01 23:59:59'):
-    min_date = pd.to_datetime(min_date)
-    max_date = pd.to_datetime(max_date)
+    min_date = pd.to_datetime(min_date).tz_localize(timezone.utc)
+    max_date = pd.to_datetime(max_date).tz_localize(timezone.utc)
     diff = (max_date - min_date).total_seconds() + 1
     offsets = random.sample(range(int(diff)), k=k)
-    timestamps = min_date + pd.TimedeltaIndex(offsets, unit="s")
-    result = [timestamp.strftime('%Y-%m-%d %H:%M:%S') for timestamp in timestamps]
+    timestamps = min_date + pd.to_timedelta(offsets, unit="s")
+    
+    result = [timestamp.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z' for timestamp in timestamps]
     return result
+
+
+def get_random_conference(k):
+    options = ["nips", "iclr", "icml", "cvpr", "eecv", "iccv", "acl", "amacl", "emnlp"]
+    return random.choices(options, k=k)
+
+
+def get_random_categories(k):
+    options = ["llm", "rag", "CV", "NLP", "speach", "other"]
+    categories = []
+    print('sampling categories ...')
+    for _ in tqdm(range(k)):
+        n = random.randint(1, 3)  # Choose between 1 to 3 categories
+        categories.append(random.sample(options, n))
+    return categories
