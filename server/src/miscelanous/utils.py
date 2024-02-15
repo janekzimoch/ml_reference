@@ -1,7 +1,7 @@
 import os
 import json
 import pandas as pd
-
+import random
 
 
 def make_directory(dir_path):
@@ -57,3 +57,15 @@ def updateJson(path, new_data):
     existing_data = readJson(path)
     existing_data.update(new_data)
     saveJson(path, existing_data)
+
+
+
+
+def get_random_timestamps(k, min_date='2019-01-01 00:00:00', max_date='2024-01-01 23:59:59'):
+    min_date = pd.to_datetime(min_date)
+    max_date = pd.to_datetime(max_date)
+    diff = (max_date - min_date).total_seconds() + 1
+    offsets = random.sample(range(int(diff)), k=k)
+    timestamps = min_date + pd.TimedeltaIndex(offsets, unit="s")
+    result = [timestamp.strftime('%Y-%m-%d %H:%M:%S') for timestamp in timestamps]
+    return result

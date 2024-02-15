@@ -11,6 +11,7 @@ import miscelanous.data_formater as formater
 import miscelanous.utils as utils
 from interfaces import Document, Recommendation
 from parsing.parserPDF import ParserPDF
+from scraper.arxiv import ArxivScraper
 from data_loader import load_dataset
 
 load_dotenv()
@@ -57,7 +58,7 @@ class EmbeddingStore():
 
             # initialise vectore store
             print('preparing vectorstore...')
-            texts, metadata = self._prepare_documents_for_faiss(docs)
+            texts, metadata = self.prepare_documents_for_faiss(docs)
             if not os.path.exists(self.embeddings_path):
                 print('embeddings not found, generating embeddings. thsi may take a')
                 torch.cuda.empty_cache()
@@ -72,7 +73,8 @@ class EmbeddingStore():
             vector_store.save_local(self.vector_store_path)
             return vector_store
 
-    def _prepare_documents_for_faiss(self, docs: list[Document]):
+    @classmethod
+    def prepare_documents_for_faiss(cls, docs: list[Document]):
         ''' each Document is divided into chunks. We need to seperate each chunk into a seperate element of a list to prepare this as an input to FAISS. '''
         text_list = []
         metadata_list = []
@@ -94,8 +96,10 @@ class EmbeddingStore():
         recommendations = []
         for i, (document, score) in enumerate(most_similar):
             relevance_description = self._explain_relevance(query, document)
+            scraped_website = ArxivScraper(document.metadata['pdf'])
             document.metadata['authors'] = []  # temporary
             document.metadata['conference'] = 'missing'  # temporary
+            document.metadata['year'] = '2023'#utils.get_random_timestamps(1)[0].split('-')[0]
             recommendation: Recommendation = {'page_content': document.page_content,
                                               'metadata': {**document.metadata, 'id': i}, 'score': float(score), 'relevance_description': relevance_description}
             recommendations.append(recommendation)
