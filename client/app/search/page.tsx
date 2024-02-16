@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputSection from "./InputSection/InputSection";
 import ResultsSection from "./ResultsSection/ResultsSection";
 import { Document } from "../interface";
@@ -14,9 +14,15 @@ export default function Page() {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const sidebarWidth = isSidebarOpen ? 250 : 0; // Example sidebar width
 
+  let offset = 0;
+  useEffect(() => {
+    offset = searchResults?.length ?? 0;
+  }, [searchResults]);
+
   function toggleSidebar() {
     setIsSidebarOpen(!isSidebarOpen);
   }
+  console.log("page: ", offset);
 
   return (
     <div className="flex w-screen h-screen">
@@ -34,7 +40,7 @@ export default function Page() {
               <ResultsSection searchResults={searchResults} isLoading={isSearchResultsLoading} />
             </div>
             <div className="w-full p-6">
-              <InputSection setSearchResults={setSearchResults} setIsLoading={setIsSearchResultsLoading} />
+              <InputSection setSearchResults={setSearchResults} setIsLoading={setIsSearchResultsLoading} offset={offset} />
             </div>
           </div>
         </div>

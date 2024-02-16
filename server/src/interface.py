@@ -33,3 +33,4 @@ class SearchMetadata(BaseModel):
 class SearchObject(BaseModel):
     text: str
     filter: SearchFilter
+    offset: int

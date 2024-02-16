@@ -12,13 +12,13 @@ export interface IDatePickerProps {
   onChange?: (date: Date) => void;
   show: boolean;
   setShow: (show: boolean) => void;
+  handleClear: () => void;
   classNames?: string;
-  selectedDateState?: [Date, (date: Date) => void];
 }
 
-export const DatePicker = ({ value, children, options, onChange, classNames, show, setShow, selectedDateState }: IDatePickerProps) => (
+export const DatePicker = ({ value, children, options, onChange, classNames, show, setShow, handleClear }: IDatePickerProps) => (
   <div className={twMerge("w-full", classNames)}>
-    <DatePickerProvider options={options} onChange={onChange} show={show} setShow={setShow} selectedDateState={selectedDateState}>
+    <DatePickerProvider options={options} onChange={onChange} show={show} setShow={setShow} handleClear={handleClear}>
       <DatePickerMain value={value} options={options}>
         {children}
       </DatePickerMain>
@@ -26,7 +26,7 @@ export const DatePicker = ({ value, children, options, onChange, classNames, sho
   </div>
 );
 
-const DatePickerMain = ({ value, options: customOptions, children }: { value?: Date; options?: IOptions; children?: ReactElement }) => {
+const DatePickerMain = ({ value, options: customOptions, children }: { value?: Date; options?: IOptions; children?: ReactElement | null }) => {
   const options = { ...defaultOptions, ...customOptions };
   const { setShow, show } = useContext(DatePickerContext);
   const InputRef = useRef<HTMLInputElement>(null);

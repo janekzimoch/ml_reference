@@ -6,14 +6,17 @@ import { FiltersContext } from "../Contexts/FiltersContext";
 export default function InputSection({
   setSearchResults,
   setIsLoading,
+  offset,
 }: {
   setSearchResults: Dispatch<SetStateAction<Document[] | undefined>>;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
+  offset: number;
 }) {
   const [query, setQuery] = useState("");
   const { startDate, endDate, selectedConferences, selectedCategories } = useContext(FiltersContext);
 
   async function handleSendQuery() {
+    console.log("handleSendQuery: ", offset);
     console.log(
       JSON.stringify({
         text: query,
@@ -42,6 +45,7 @@ export default function InputSection({
             categories: selectedCategories.map((x) => x.label),
           },
           metadata: {},
+          offset: offset,
         }),
       });
       if (!response.ok) {

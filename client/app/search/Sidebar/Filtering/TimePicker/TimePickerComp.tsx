@@ -28,25 +28,25 @@ const options: IOptions = {
   inputPlaceholderProp: "all dates",
 };
 
-export default function TimePickerComp({
-  selectedDate,
-  setSelectedDate,
-}: {
-  selectedDate: Date | null;
-  setSelectedDate: (arg0: Date | null) => void;
-}) {
+export default function TimePickerComp({ setSelectedDate }: { setSelectedDate: (arg0: Date | null) => void }) {
   const [show, setShow] = useState<boolean>(false);
   const handleChange = (selectedDate: Date) => {
     setSelectedDate(selectedDate);
     console.log(selectedDate);
   };
+
   const handleClose = (state: boolean) => {
     setShow(state);
   };
 
+  const handleClear = () => {
+    setSelectedDate(null);
+    setShow(false);
+  };
+
   return (
     <div>
-      <DatePicker options={options} onChange={handleChange} show={show} setShow={handleClose} />
+      <DatePicker options={options} onChange={handleChange} show={show} setShow={handleClose} handleClear={handleClear} />
     </div>
   );
 }

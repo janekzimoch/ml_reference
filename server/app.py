@@ -51,6 +51,7 @@ async def search_papers(search_object: SearchObject):
     response = ai_papers.query.near_vector(
         near_vector=query_embedding,
         limit=10,
+        offset=search_object.offset,
         filters=filters,
         return_metadata=wvc.query.MetadataQuery(distance=True)
     )
