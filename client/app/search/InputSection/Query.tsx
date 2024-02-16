@@ -28,7 +28,7 @@ export default function Query({
   }
 
   return (
-    <div className="flex relative text-lg">
+    <div className="flex relative text-lg overflow-hidden border border-customGray-400 rounded-2xl">
       <TextareaAutosize
         name="query"
         ref={textareaRef}
@@ -37,7 +37,8 @@ export default function Query({
         placeholder="Paste your abstract or describe year research idea ... "
         value={query}
         onChange={handleInputChange}
-        className="placeholder-gray-400 py-3.5 pl-8 pr-16 text-gray-800 resize-none w-full border border-customGray-400 custom-scrollbar rounded-2xl focus:outline-none drop-shadow-sm"
+        onKeyDown={handleKeyDown}
+        className="placeholder-gray-400 py-3.5 pl-8 pr-16 text-gray-800 resize-none w-full custom-scrollbar focus:outline-none drop-shadow-sm"
       />
       <Image
         src="/send.svg"
@@ -45,7 +46,6 @@ export default function Query({
         height={28}
         className="absolute bottom-0 right-2 m-2 cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out"
         onClick={handleSendQuery}
-        onKeyDown={handleKeyDown}
         alt="send"
       />
     </div>

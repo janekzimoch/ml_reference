@@ -1,13 +1,11 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
 import weaviate.classes as wvc
 from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 
 from src.WeaviateClient import VectorStoreClient
-from src.embedding_store import EmbeddingStore
-from server.src.interface import Recommendation, SearchObject
+from src.interface import SearchObject
 import src.vectorstore as vs
 
 load_dotenv()
@@ -44,6 +42,7 @@ async def get_collections_info():
 
 @app.post("/app/search_papers")
 async def search_papers(search_object: SearchObject):
+    print(search_object)
 
     query = search_object.text
     query_embedding = embedding_model.embed_query(query)
@@ -56,12 +55,11 @@ async def search_papers(search_object: SearchObject):
         return_metadata=wvc.query.MetadataQuery(distance=True)
     )
 
-    recommendation = response
-    # recommendation_simplified = [{'title': rec['metadata']['title'].replace('_',' '), 
-    #                               'abstract': rec['metadata']['abstract'],
-    #                               'url': rec['metadata']['pdf'],
-    #                               'year': rec['metadata']['year']} for rec in recommendation]
-    return recommendation
+    recommendation_simplified = [{'title': res.properties['title'].replace('_',' '), 
+                                'abstract': res.properties['text'],
+                                'url': "missing",
+                                'year': res.properties['timestamp_published'].strftime("%Y-%m-%d")} for res in response.objects]
+    return recommendation_simplified
 
 '''
 run using: 

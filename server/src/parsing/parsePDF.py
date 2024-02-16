@@ -13,7 +13,7 @@ class ChunkingMethods(str, Enum):
     chunk = "chunk"
 
 
-class ParserPDF():
+class parsePDF():
 
     def __init__(self, metadata_path):
         self.metadata = utils.readJson(metadata_path)
@@ -84,7 +84,7 @@ class ParserPDF():
 
 
 if __name__ == "__main__":
-    parser = ParserPDF()
+    parser = parsePDF()
     docs = parser.extract_directory(
         '/Users/janek/Documents/mlreference/papers/test')
     print(docs)

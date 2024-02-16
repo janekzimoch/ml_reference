@@ -40,10 +40,6 @@ try:
     # query
     query_embedding = embedding_model.embed_query(search_object["text"])
 
-
-    # TODO:
-    # 3. apply filters and check if return documents meet those filters. if yes -> you are done.
-
     filters = vs.get_filters(search_object["filter"])
 
     response = ai_papers.query.near_vector(
@@ -57,6 +53,7 @@ try:
         print(o.properties["timestamp_published"])
         print(o.properties["conference"])
         print(o.properties["categories"])
+
 
 
 

@@ -10,7 +10,7 @@ from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 import miscelanous.data_formater as formater
 import miscelanous.utils as utils
 from interface import Document, Recommendation
-from parsing.parserPDF import ParserPDF
+from parsing.parsePDF import parsePDF
 from scraper.arxiv import ArxivScraper
 from data_loader import load_dataset
 
@@ -47,7 +47,7 @@ class EmbeddingStore():
                 # load default data
                 documents_dir = os.environ.get('PDF_ARTICLES_DIR')
                 metadata_path = os.environ.get('PDF_ARTICLES_METADATA_DIR')
-                parser = ParserPDF(metadata_path)
+                parser = parsePDF(metadata_path)
                 docs = parser.extract_directory(documents_dir)
             elif data == 'DORIS-MAE':
                 # we assume data is from DORIS_MAE daatset

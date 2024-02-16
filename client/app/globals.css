@@ -13,6 +13,11 @@
   width: 8px; /* Width of the scrollbar */
 }
 
+/* Custom scrollbar styles */
+.custom-scrollbar.thiner::-webkit-scrollbar {
+  width: 5px; /* Width of the scrollbar */
+}
+
 .custom-scrollbar::-webkit-scrollbar-track {
   background: transparent; /* Transparent track */
 }
@@ -24,4 +29,13 @@
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #d8d7d5; /* Scroll handle on hover */
+}
+
+/* Darker theme for custom-scrollbar */
+.custom-scrollbar.darker::-webkit-scrollbar-thumb {
+  background: #b3b2b0; /* Darker scroll handle */
+}
+
+.custom-scrollbar.darker::-webkit-scrollbar-thumb:hover {
+  background: #989896; /* Darker scroll handle on hover */
 }

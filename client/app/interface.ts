@@ -4,3 +4,12 @@ export type Document = {
   year: number;
   url: string;
 };
+
+export type SelectorItem = {
+  name: string;
+};
+
+export type SelectedField = {
+  label: string;
+  value: number;
+};

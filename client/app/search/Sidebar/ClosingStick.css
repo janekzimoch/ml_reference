@@ -1,0 +1,14 @@
+
+.rotate-0 {
+  transform: rotate(0deg) translateZ(0px);
+}
+
+.rotate-15 {
+  transform: rotate(15deg) translateZ(0px);
+}
+
+.-rotate-15 {
+  transform: rotate(-15deg) translateZ(0px);
+}
+
+  
