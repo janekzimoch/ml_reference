@@ -89,7 +89,7 @@ export default function Select({
 
   return (
     <div className="text-gray-400 drop-shadow-md overflow-visible">
-      <Container ref={containerRef}>
+      <Container innerRef={containerRef}>
         <DropdownButton isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
 
         {selectedFields.map((field, index) => (
@@ -97,7 +97,7 @@ export default function Select({
         ))}
       </Container>
       <DropdownBox
-        ref={popupListRef}
+        innerRef={popupListRef}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         availableFields={availableFields}

@@ -4,7 +4,7 @@ import Tooltip from "./Tooltip";
 import { FiltersContext } from "../../Contexts/FiltersContext";
 
 export default function DateRangeFilter() {
-  const { startDate, setStartDate, endDate, setEndDate } = useContext(FiltersContext);
+  const { setStartDate, setEndDate } = useContext(FiltersContext);
 
   return (
     <div>
@@ -15,11 +15,11 @@ export default function DateRangeFilter() {
       <div className="flex flex-col space-y-2 text-md font-light border-[1px] border-gray-600 ml-1 px-2 py-3 rounded-xl">
         <span className="flex flex-row items-center ">
           <p className="w-16 text-start">From:</p>
-          <TimePickerComp selectedDate={startDate} setSelectedDate={setStartDate} />
+          <TimePickerComp setSelectedDate={setStartDate} />
         </span>
         <span className="flex flex-row items-center">
           <p className="w-16 text-start">To:</p>
-          <TimePickerComp selectedDate={endDate} setSelectedDate={setEndDate} />
+          <TimePickerComp setSelectedDate={setEndDate} />
         </span>
       </div>
     </div>

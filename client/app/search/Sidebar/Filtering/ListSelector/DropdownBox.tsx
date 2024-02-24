@@ -9,7 +9,7 @@ export default function DropdownBox({
   isFieldSelected,
   highlightedIndex,
   setHighlightedIndex,
-  ref,
+  innerRef,
 }: {
   isOpen: boolean;
   setIsOpen: (arg0: boolean) => void;
@@ -18,11 +18,11 @@ export default function DropdownBox({
   isFieldSelected: (arg0: SelectedField) => boolean;
   highlightedIndex: number;
   setHighlightedIndex: (arg0: number) => void;
-  ref: RefObject<HTMLUListElement>;
+  innerRef: RefObject<HTMLUListElement>;
 }) {
   return (
     <div className={`rounded-lg overflow-hidden border-gray-600 border-[1px] w-full left-0 ml-1 top-full mt-1 ${isOpen ? "" : "hidden"}`}>
-      <ul ref={ref} className="custom-scrollbar darker thiner max-h-48 w-full  bg-gray-800 overflow-auto">
+      <ul ref={innerRef} className="custom-scrollbar darker thiner max-h-48 w-full  bg-gray-800 overflow-auto">
         {availableFields.map((option, index) => (
           <li
             onClick={(e) => {

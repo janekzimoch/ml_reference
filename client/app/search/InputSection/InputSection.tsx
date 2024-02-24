@@ -1,70 +1,54 @@
-import React, { Dispatch, SetStateAction, useContext, useState } from "react";
-import Query from "./Query";
-import { Document } from "@/app/interface";
-import { FiltersContext } from "../Contexts/FiltersContext";
+"use client";
+
+import React, { useRef } from "react";
+import TextareaAutosize from "react-textarea-autosize";
+import Image from "next/image";
 
 export default function InputSection({
-  setSearchResults,
-  setIsLoading,
-  offset,
+  query,
+  setQuery,
+  handleSendQuery,
 }: {
-  setSearchResults: Dispatch<SetStateAction<Document[] | undefined>>;
-  setIsLoading: Dispatch<SetStateAction<boolean>>;
-  offset: number;
+  query: string;
+  setQuery: (query: string) => void;
+  handleSendQuery: () => void;
 }) {
-  const [query, setQuery] = useState("");
-  const { startDate, endDate, selectedConferences, selectedCategories } = useContext(FiltersContext);
+  const textareaRef = useRef(null);
 
-  async function handleSendQuery() {
-    console.log("handleSendQuery: ", offset);
-    console.log(
-      JSON.stringify({
-        text: query,
-        filter: {
-          start_date: startDate ? startDate.toISOString() : null,
-          end_date: endDate ? endDate.toISOString() : null,
-          conferences: selectedConferences.map((x) => x.label),
-          categories: selectedCategories.map((x) => x.label),
-        },
-        metadata: {},
-      })
-    );
-    setIsLoading(true);
-    try {
-      const response = await fetch("http://127.0.0.1:8000/app/search_papers", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          text: query,
-          filter: {
-            start_date: startDate ? startDate.toISOString() : null,
-            end_date: endDate ? endDate.toISOString() : null,
-            conferences: selectedConferences.map((x) => x.label),
-            categories: selectedCategories.map((x) => x.label),
-          },
-          metadata: {},
-          offset: offset,
-        }),
-      });
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
+  function handleInputChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    setQuery(e.target.value);
+  }
+
+  function handleKeyDown(event: React.KeyboardEvent) {
+    if (event.key === "Enter" && event.target === textareaRef.current) {
+      if (!event.shiftKey) {
+        event.preventDefault(); // Prevent line break in textarea
+        handleSendQuery();
       }
-      console.log(response);
-
-      const data = await response.json();
-      setSearchResults(data);
-    } catch (error) {
-      console.error("Failed to fetch: ", error);
-    } finally {
-      setIsLoading(false);
     }
   }
 
   return (
-    <div className="bg-white">
-      <Query query={query} setQuery={setQuery} handleSendQuery={handleSendQuery} />
+    <div className="flex relative bg-white text-lg overflow-hidden border border-customGray-400 rounded-2xl">
+      <TextareaAutosize
+        name="query"
+        ref={textareaRef}
+        maxRows={7}
+        autoFocus
+        placeholder="Paste your abstract or describe year research idea ... "
+        value={query}
+        onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
+        className="placeholder-gray-400 py-3.5 pl-8 pr-16 text-gray-800 resize-none w-full custom-scrollbar focus:outline-none drop-shadow-sm"
+      />
+      <Image
+        src="/send.svg"
+        width={28}
+        height={28}
+        className="absolute bottom-0 right-2 m-2 cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out"
+        onClick={handleSendQuery}
+        alt="send"
+      />
     </div>
   );
 }
